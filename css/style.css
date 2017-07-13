@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&subset=latin-ext');
+
+body{
+    font-size: 16px;
+    color:  #303030;
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: #f7f7f7;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+

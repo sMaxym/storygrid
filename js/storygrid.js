@@ -22,6 +22,15 @@ function setCanvasSize($canvas, width, height){
 // OOP data
 
 
+class GridEntity{
+    
+    constructor(){
+        
+    }
+    
+}
+
+
 
 // ----------------
  

@@ -1,7 +1,7 @@
 var editor = new fabric.Canvas('editor');
 
 
-
+window.addEventListener('resize', setEditorFullscreen, false);
 
 $(document).ready(function(){
     setEditorFullscreen();
@@ -9,7 +9,7 @@ $(document).ready(function(){
     var rect = new fabric.Rect({
         left: 300,
         top: 300,
-        fill: 'aqua',
+        fill: '#8bcfbd',
         width: 70,
         height: 70 
     });
@@ -18,8 +18,6 @@ $(document).ready(function(){
     editor.renderAll();
 });
 
-
-window.addEventListener('resize', setEditorFullscreen, false);
 
 
 

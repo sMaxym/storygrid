@@ -11,6 +11,25 @@ $(document).ready(function(){
     initialize();
     initAddButton();
     initEditingPanel();
+    
+    vex.dialog.open({
+        message: 'Enter your username and password:',
+        input: [
+            '<input name="color" type="color" value="#8bcfbd" />'
+        ].join(''),
+        buttons: [
+            $.extend({}, vex.dialog.buttons.YES, { text: 'Login' }),
+            $.extend({}, vex.dialog.buttons.NO, { text: 'Back' })
+        ],
+        callback: function (data) {
+            if (!data) {
+                console.log('Cancelled')
+            } else {
+                console.log('Username', data.username, 'Password', data.password)
+            }
+        }
+    });
+    
 });
 
 function initialize(){

@@ -16,6 +16,8 @@ $(document).ready(function(){
     
     editor.add(rect);
     editor.renderAll();
+    
+    let max = new GridEntity(editor);
 });
 
 

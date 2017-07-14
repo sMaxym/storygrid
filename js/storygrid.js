@@ -9,13 +9,11 @@ function setCanvasSize($canvas, width, height){
     });
 }
 
+function throwException(){
+    vex.dialog.alert('Sorry... something went wrong :(');
+}
+
 // ----------------
-
-
-
-
-
-
 
 
 
@@ -23,12 +21,22 @@ function setCanvasSize($canvas, width, height){
 
 
 class GridEntity{
-    
-    constructor(){
-        this._newVex();
+
+    constructor(canvas){
+        this.displayed = false;
+        this.entity = new fabric.Rect({
+            left: 500,
+            top: 500,
+            fill: '#8bcfbd',
+            width: 50,
+            height: 50 
+        });
+        
+        this._newVex(canvas);
     }
     
-    _newVex(){
+    _newVex(canvas){
+        var self = this;
         vex.dialog.open({
             message: 'New Element:',
             input: [
@@ -47,7 +55,7 @@ class GridEntity{
                 
                 '<div class="creation-field-wrapper">',
                     '<label for="name">Name/Title</label>',
-                    '<input name="name" type="text" placeholder="Angelina" />',
+                    '<input name="name" type="text" placeholder="Angelina" required />',
                 '</div>',
                 '<div class="creation-field-wrapper">',
                     '<label for="desc">Description</label>',
@@ -66,16 +74,20 @@ class GridEntity{
                 $.extend({}, vex.dialog.buttons.YES, { text: 'Accept' }),
                 $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })
             ],
-            callback: function (data) {
-                if (!data) {
-                    console.log('Cancelled')
-                } else {
-                    console.log('Username', data.username, 'Password', data.password)
-                }
-            }
+            callback: function(data){
+                self.display(canvas);
+            },
         });
     }
     
+    display(canvas){
+        if(!this.displayed){
+            canvas.add(this.entity);
+            canvas.renderAll();  
+        
+            this.displayed = true;
+        }
+    }
 }
 
 

@@ -11,8 +11,6 @@ $(document).ready(function(){
     initialize();
     initAddButton();
     initEditingPanel();
-    
-    let a = new GridEntity();
 });
 
 function initialize(){

@@ -33,6 +33,10 @@ class GridEntity{
         });
         
         this._newVex(canvas);
+        
+        
+        
+        this.entity.on('selected', function(e){});
     }
     
     _newVex(canvas){
@@ -75,7 +79,17 @@ class GridEntity{
                 $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })
             ],
             callback: function(data){
-                self.display(canvas);
+                if(data.name == ""){
+                    throwException();
+                }else{
+                    self.name = data.name;
+                    self.description = data.desc;
+                    self.color = data.color;
+                    
+                    self.entity.set('fill', data.color);
+                    
+                    self.display(canvas);
+                }
             },
         });
     }

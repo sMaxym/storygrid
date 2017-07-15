@@ -1,4 +1,7 @@
-
+var entityWidth = 50, 
+    entityHeight = 50,
+    entityPositionLeft = 500, 
+    entityPositionTop = 500;
 
 // Procedure data
 
@@ -22,14 +25,50 @@ function throwException(){
 
 class GridEntity{
 
+    getEntity(){
+        return this.entity;
+    }
+    
+    setEntity(value){
+        this.entity = value;
+    }
+    
+    getName(){
+        return this.name;
+    }
+    
+    setName(value){
+        this.name = value;
+    }
+    
+    getDescription(){
+        return this.description;
+    }
+    
+    setDescription(value){
+        this.description = value;
+    }
+    
+    getColor(){
+        return this.color;
+    }
+
+    setColor(value){
+        this.color = value;
+        this.entity.set('fill', this.color);
+        this.canvas.renderAll();
+    }
+    
+    
     constructor(canvas){
+        this.canvas = canvas;
         this.displayed = false;
         this.entity = new fabric.Rect({
-            left: 500,
-            top: 500,
+            left: entityPositionLeft,
+            top: entityPositionTop,
             fill: '#8bcfbd',
-            width: 50,
-            height: 50 
+            width: entityWidth,
+            height: entityHeight, 
         });
         
         this._newVex(canvas);
@@ -101,6 +140,47 @@ class GridEntity{
         
             this.displayed = true;
         }
+    }
+}
+
+
+
+class GridChar extends GridEntity{
+    constructor(canvas){
+        super(canvas);
+        
+        super.setEntity(new fabric.Rect({
+                        width: entityWidth,
+                        height: entityHeight,
+                        left: entityPositionLeft,
+                        top: entityPositionTop,
+                        }));
+    }
+}
+
+class GridNpc extends GridEntity{
+    constructor(canvas){
+        super(canvas);
+        
+        super.setEntity(new fabric.Rect({
+                        width: entityWidth,
+                        height: entityHeight,
+                        left: entityPositionLeft,
+                        top: entityPositionTop,
+                        angle: 45,
+                        }));
+    }
+}
+
+class GridPlace extends GridEntity{
+    constructor(canvas){
+        super(canvas);
+        
+        super.setEntity(new fabric.Circle({
+                        radius: entityWidth / 2,
+                        left: entityPositionLeft,
+                        top: entityPositionTop,
+                        }));
     }
 }
 

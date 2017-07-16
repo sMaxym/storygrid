@@ -19,14 +19,29 @@ a:active, a:visited{
     text-decoration: none;
 }
 
-h1{
+h1,h2{
     font-family: Lato;
     color:  #4d4d4d;
-    font-size: 25px;
     font-weight: 400;
     text-transform: uppercase;
+    letter-spacing: 2px; 
+}
+
+h1{
+    font-size: 25px;
+}
+
+h2{
+    font-size: 22px;
+}
+
+
+p{
+    color:  #717171;
+    font-size: 20px;    
     letter-spacing: 2px;
 }
+
 
 .underline {    
     border-radius: 50%;
@@ -131,6 +146,49 @@ h1{
 }
 
 
+#about{
+    text-align: center;
+}
+
+#about h2{
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+#about .underline{
+    margin-top: 15px;
+    background-color: #61b59d;
+}
+
+#about .underline::after,
+#about .underline::before{
+    background-color: #61b59d;
+}
+
+
+
+
+#footer{
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    background-color: #8bd0be;
+    padding: 30px 0;
+}
+
+#footer #copyright,
+#footer #author,
+#footer .links{
+    padding: 7px 0;
+}
+
+#footer a{
+    color: #fff;
+}
+
+#footer a>i{
+    padding: 0 3px;
+}
 
 
 

@@ -3,6 +3,8 @@ var $editingPanel = $('.editing-panel');
 var $editingPanelToggle = $('.editing-panel .panel-title a');
 var $editingButtons = $('.editing-panel .list-group>.list-group-item');
 
+var $exampleSlider = $('.example-list');
+
 var toggleArrowMode = 180;
 var $tooltips = $('[data-toggle="tooltip"]');
 
@@ -44,6 +46,33 @@ function initEditingPanel(){
 
 
 
+$exampleSlider.slick({
+  centerMode: true,
+  centerPadding: '10px',
+  slidesToShow: 3,
+  nextArrow: $('#toRight'),
+  prevArrow: $('#toLeft'),
+  responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1
+      }
+    }
+  ]
+});
 
 
 $addButtons.children().add($editingPanelToggle).add($editingButtons).on('click', function(e){

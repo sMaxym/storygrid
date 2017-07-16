@@ -64,16 +64,20 @@
     
     <section id="example">
         <div class="container-fluid data">
-            <div class="example-list">
-                <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
-                <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
-                <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
+            <div class="row">
+               <div class="col-lg-1 col-lg-offset-1">
+                   <span id="toLeft"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+               </div>
+                <div class="col-lg-8 example-list">
+                    <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
+                    <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
+                    <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
+                    <a href="#" class="example-item"><img src="img/grid-example.png" alt="example" /></a>
+                </div>
+                <div class="col-lg-1">
+                    <span id="toRight"><i class="fa fa-angle-right" aria-hidden="true"></i></span>    
+                </div>
             </div>
-        </div>
-        
-        <div class="controllers">
-            <span id="toLeft"></span>
-            <span id="toRight"></span>
         </div>
     </section>
     
@@ -98,6 +102,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/vex.combined.min.js"></script>
+    <script src="js/design.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
   </body>
 </html>

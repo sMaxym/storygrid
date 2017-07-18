@@ -1,5 +1,26 @@
 @media only screen and (max-width: 767px){
+    #top #toggle{
+        position: absolute;
+        right: 5%;
+        margin-top: 40px;
+    }
     
+    #title #title-overlay{
+        width: 50%;
+        left: 25%;
+    }
+    
+    #title .btn-grid{
+        padding: 10px 20px
+    }
+    
+    #title h1{
+        font-size: 17px;
+    }
+    
+    #about p{
+        font-size: 15px;
+    }
 }
 
 
@@ -8,6 +29,11 @@
 }
 
 
-@media only screen and (max-width: 1170px){
-    
+@media only screen and (max-width: 1200px){
+    #top .menu-wrapper{
+        display: none;
+        position: relative;
+        width: 200px;
+        margin: 30px auto;
+    }
 }

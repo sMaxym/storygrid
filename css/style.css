@@ -35,6 +35,21 @@ h2{
     font-size: 22px;
 }
 
+h3{
+    position: relative;
+    text-align: center;
+    color: #fff;
+    background-color: #8bd0be;
+    padding: 7px 0;
+    margin-bottom: 35px;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+h3:first-letter{
+    text-transform: uppercase;
+}
+
 
 p{
     color:  #717171;
@@ -73,6 +88,39 @@ p{
 
 #top{
     text-align: center;
+}
+
+#toggle {
+    width: 28px;
+    height: 30px;
+    margin: 10px auto;
+    cursor: pointer;
+    margin: 65px 0 20px 0;
+}
+
+#top #toggle{
+} 
+
+#toggle div {
+    width: 30px;
+    height: 5px;
+    background-color: #8bd0be;
+    margin: 4px auto;
+    transition: all 0.3s;
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+
+#toggle.on .one {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+#toggle.on .two {
+    opacity: 0;
+}
+
+#toggle.on .three {
+     transform: rotate(-45deg) translate(7px, -8px);
 }
 
 #top .logo{
@@ -150,6 +198,10 @@ p{
     text-align: center;
 }
 
+#about p{
+    padding: 0 60px;
+}
+
 #about h2{
     margin-top: 60px;
     margin-bottom: 20px;
@@ -165,7 +217,6 @@ p{
     background-color: #61b59d;
 }
 
-
 #example{
     margin: 50px 0;
     text-align: center;
@@ -176,8 +227,7 @@ p{
 }
 
 #example .example-list a{
-    margin-left: 20px;
-    margin-right: 20px;
+    
 }
 
 #example .example-list img{

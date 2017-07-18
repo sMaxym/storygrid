@@ -30,6 +30,17 @@ class GridEntity{
     }
     
     setEntity(value){
+        value.setControlsVisibility({
+            mt: false, 
+            mb: false, 
+            ml: false, 
+            mr: false, 
+            bl: false,
+            br: false, 
+            tl: false, 
+            tr: false,
+            mtr: false, 
+        });
         this.entity = value;
     }
     

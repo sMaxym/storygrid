@@ -19,6 +19,7 @@ $addButtonPlace.on('click', function(){
     addEntity(gridEntities, newGridEntity('place', editor));
 });
 $addButtonConnection.on('click', function(){
+    createConnection(editor, gridEntities);
 });
 
 

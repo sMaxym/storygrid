@@ -1,7 +1,10 @@
-var entityWidth = 50, 
-    entityHeight = 50,
-    entityPositionLeft = 500, 
-    entityPositionTop = 500;
+var entitySettings = {
+    Width: 50, 
+    Height: 50,
+    PositionLeft: 500, 
+    PositionTop: 500,
+    TextSize: 15,
+};
 
 // Procedure data
 
@@ -14,6 +17,41 @@ function setCanvasSize($canvas, width, height){
 
 function throwException(){
     vex.dialog.alert('Sorry... something went wrong :(');
+}
+
+function hideSelectionTools(object){
+    object.setControlsVisibility({
+            mt: false, 
+            mb: false, 
+            ml: false, 
+            mr: false, 
+            bl: false,
+            br: false, 
+            tl: false, 
+            tr: false,
+            mtr: false, 
+        });
+}
+
+function setObjectName(object, text){
+    var dataText = new fabric.Text(text, {
+        fontFamily: 'Lato',
+        fontSize: entitySettings.TextSize,
+        originX: 'center',
+        originY: 'center',
+        left: entitySettings.PositionLeft + 25,
+        top: entitySettings.PositionTop + 80,
+    });
+    
+    var group = new fabric.Group([object, dataText],{
+        
+    });
+    
+    return group;
+}
+
+function createConnection(canvas, entities){
+    
 }
 
 // ----------------
@@ -30,18 +68,8 @@ class GridEntity{
     }
     
     setEntity(value){
-        value.setControlsVisibility({
-            mt: false, 
-            mb: false, 
-            ml: false, 
-            mr: false, 
-            bl: false,
-            br: false, 
-            tl: false, 
-            tr: false,
-            mtr: false, 
-        });
-        this.entity = value;
+        this.entity = setObjectName(value, 'FRAMAT');
+        hideSelectionTools(this.entity);
     }
     
     getName(){
@@ -70,17 +98,35 @@ class GridEntity{
         this.canvas.renderAll();
     }
     
+    setConnection(id, value){
+        if(id == 0){
+            this.connections[id] = value; 
+        }else if(id == 1){
+            this.connections[id] = value;
+        }else if(id == 2){
+            this.connections[id] = value;
+        }else{
+            this.connections[id] = value;
+        }
+    }
+    
+    getConnection(id){
+        return this.connections[id];
+    }
+    
+    
     
     constructor(canvas){
         this.canvas = canvas;
         this.displayed = false;
         this.entity = new fabric.Rect({
-            left: entityPositionLeft,
-            top: entityPositionTop,
+            left: entitySettings.PositionLeft,
+            top: entitySettings.PositionTop,
             fill: '#8bcfbd',
-            width: entityWidth,
-            height: entityHeight, 
+            width: entitySettings.Width,
+            height: entitySettings.Height, 
         });
+        this.connections = [null,null,null,null];
         
         this._newVex(canvas);
         
@@ -137,6 +183,10 @@ class GridEntity{
                     self.color = data.color;
                     
                     self.entity.set('fill', data.color);
+                    self.entity.item(1).set({
+                        text:self.name,
+                        fill:self.color,
+                    });
                     
                     self.display(canvas);
                 }
@@ -161,10 +211,10 @@ class GridChar extends GridEntity{
         super(canvas);
         
         super.setEntity(new fabric.Rect({
-                        width: entityWidth,
-                        height: entityHeight,
-                        left: entityPositionLeft,
-                        top: entityPositionTop,
+                        width: entitySettings.Width,
+                        height: entitySettings.Height,
+                        left: entitySettings.PositionLeft,
+                        top: entitySettings.PositionTop,
                         }));
     }
 }
@@ -174,10 +224,12 @@ class GridNpc extends GridEntity{
         super(canvas);
         
         super.setEntity(new fabric.Rect({
-                        width: entityWidth,
-                        height: entityHeight,
-                        left: entityPositionLeft,
-                        top: entityPositionTop,
+                        width: entitySettings.Width,
+                        height: entitySettings.Height,
+                        originX: 'left',
+                        originY: 'center',
+                        left: entitySettings.PositionLeft,
+                        top: entitySettings.PositionTop,
                         angle: 45,
                         }));
     }
@@ -188,10 +240,67 @@ class GridPlace extends GridEntity{
         super(canvas);
         
         super.setEntity(new fabric.Circle({
-                        radius: entityWidth / 2,
-                        left: entityPositionLeft,
-                        top: entityPositionTop,
+                        radius: entitySettings.Width / 2,
+                        left: entitySettings.PositionLeft,
+                        top: entitySettings.PositionTop,
                         }));
+    }
+}
+
+
+
+class GridConnection{
+    constructor(canvas, entityFrom, entityTo){
+        var self = this;
+        
+        this.canvas = canvas;
+        this.from = entityFrom;
+        this.to = entityTo;
+        this.coords = [
+            this.from.entity.left + entitySettings.Width / 2,
+            this.from.entity.top + entitySettings.Height / 2,
+            this.to.entity.left + entitySettings.Width / 2,
+            this.to.entity.top + entitySettings.Height / 2,
+        ];
+        
+        this.entity = new fabric.Line(this.coords, {
+            fill: this.from.color,    
+            stroke: this.from.color,
+            strokeWidth: 2,
+            selectable: false,
+        });
+        
+        for(var i = 0; i < 4; ++i){
+            if(!this.from.connections[i]){
+                this.from.setConnection(i, this.entity);
+            }
+        }
+        
+        for(var i = 0; i < 4; ++i){
+            if(!this.to.connections[i]){
+                this.to.setConnection(i, this.entity);
+            }
+        }
+        
+        this.from.entity.on('moving', function(e){
+            self.entity.set({'x1': self.from.entity.left + entitySettings.Width / 2}); 
+            self.entity.set({'y1': self.from.entity.top + entitySettings.Height / 2});
+            
+            self.canvas.renderAll();
+        });
+        
+        this.to.entity.on('moving', function(e){
+            self.entity.set({'x2': self.to.entity.left + entitySettings.Width / 2}); 
+            self.entity.set({'y2': self.to.entity.top + entitySettings.Height / 2});
+            
+            self.canvas.renderAll();
+        });
+        
+        
+        
+        canvas.add(this.entity);
+        canvas.sendToBack(this.entity);
+        canvas.renderAll();
     }
 }
 

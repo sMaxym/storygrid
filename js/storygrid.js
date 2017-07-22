@@ -1,3 +1,10 @@
+var editOptions = {
+    Edit: false,
+    Color: false,
+    Image: false,
+    Remove: false,
+}
+
 var lineCreation = {    
     LineSelectable: 0,
     EntityFrom: null,
@@ -191,23 +198,26 @@ class GridEntity{
             ].join(''),
             buttons: [
                 $.extend({}, vex.dialog.buttons.YES, { text: 'Accept' }),
-                $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })
+                $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' }),
             ],
             callback: function(data){
-                if(data.name == ""){
-                    throwException();
-                }else{
-                    self.name = data.name;
-                    self.description = data.desc;
-                    self.color = data.color;
-                    
-                    self.entity.set('fill', data.color);
-                    self.entity.item(1).set({
-                        text:self.name,
-                        fill:self.color,
-                    });
-                    
-                    self.display(canvas);
+                
+                if(data){
+                    if(data.name == ""){
+                        throwException();
+                    }else{
+                        self.name = data.name;
+                        self.description = data.desc;
+                        self.color = data.color;
+
+                        self.entity.set('fill', data.color);
+                        self.entity.item(1).set({
+                            text:self.name,
+                            fill:self.color,
+                        });
+
+                        self.display(canvas);
+                    }
                 }
             },
         });
@@ -239,6 +249,8 @@ class GridChar extends GridEntity{
                         }));
         
         this.entity.on('selected', function(e){  
+            
+            //Line Creation
             if(lineCreation.LineSelectable != 0){
                 this.item(0).set({ strokeWidth: 5, stroke: 'rgba(255,0,0,0.3)' });
                 if(lineCreation.LineSelectable == 1){
@@ -252,6 +264,7 @@ class GridChar extends GridEntity{
                 
                 lineCreation.LineSelectable -= 1;
             }
+            
         });
     }
 }
@@ -355,17 +368,21 @@ class GridConnection{
         }
         
         this.from.entity.on('moving', function(e){
-            self.entity.set({'x1': self.from.entity.left + entitySettings.Width / 2}); 
-            self.entity.set({'y1': self.from.entity.top + entitySettings.Height / 2});
-            
-            self.canvas.renderAll();
+            if(self.from != null && self.to != null){
+                self.entity.set({'x1': self.from.entity.left + entitySettings.Width / 2}); 
+                self.entity.set({'y1': self.from.entity.top + entitySettings.Height / 2});
+                
+                self.canvas.renderAll();   
+            }
         });
         
         this.to.entity.on('moving', function(e){
-            self.entity.set({'x2': self.to.entity.left + entitySettings.Width / 2}); 
-            self.entity.set({'y2': self.to.entity.top + entitySettings.Height / 2});
-            
-            self.canvas.renderAll();
+            if(self.from != null && self.to != null){
+                self.entity.set({'x2': self.to.entity.left + entitySettings.Width / 2}); 
+                self.entity.set({'y2': self.to.entity.top + entitySettings.Height / 2});
+                
+                self.canvas.renderAll();
+            }
         });
         
         
@@ -375,6 +392,10 @@ class GridConnection{
         canvas.renderAll();
     }
 }
+
+
+
+
 
 
 

@@ -1,3 +1,9 @@
+var lineCreation = {    
+    LineSelectable: 0,
+    EntityFrom: null,
+    EntityTo: null,
+};
+
 var entitySettings = {
     Width: 50, 
     Height: 50,
@@ -6,7 +12,24 @@ var entitySettings = {
     TextSize: 15,
 };
 
+
+
+
+var cfg = {
+    Containers: {
+        Entity: null,
+        Connections: null,
+    }
+}
+
 // Procedure data
+
+
+function initStorygrid(entityContainer, connectionContainer){
+    cfg.Containers.Entity = entityContainer;
+    cfg.Containers.Connections = connectionContainer;
+}
+
 
 function setCanvasSize($canvas, width, height){
     $canvas.css({
@@ -50,8 +73,8 @@ function setObjectName(object, text){
     return group;
 }
 
-function createConnection(canvas, entities){
-    
+function addConnection(canvas){
+    return new GridConnection(canvas, lineCreation.EntityFrom, lineCreation.EntityTo);
 }
 
 // ----------------
@@ -129,10 +152,6 @@ class GridEntity{
         this.connections = [null,null,null,null];
         
         this._newVex(canvas);
-        
-        
-        
-        this.entity.on('selected', function(e){});
     }
     
     _newVex(canvas){
@@ -210,18 +229,38 @@ class GridChar extends GridEntity{
     constructor(canvas){
         super(canvas);
         
+        var self = this;
+        
         super.setEntity(new fabric.Rect({
                         width: entitySettings.Width,
                         height: entitySettings.Height,
                         left: entitySettings.PositionLeft,
                         top: entitySettings.PositionTop,
                         }));
+        
+        this.entity.on('selected', function(e){  
+            if(lineCreation.LineSelectable != 0){
+                this.item(0).set({ strokeWidth: 5, stroke: 'rgba(255,0,0,0.3)' });
+                if(lineCreation.LineSelectable == 1){
+                    lineCreation.EntityTo = self;
+                    cfg.Containers.Connections.push(addConnection(this.canvas));
+                    lineCreation.EntityFrom.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                    lineCreation.EntityTo.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                }else if(lineCreation.LineSelectable == 2){
+                    lineCreation.EntityFrom = self;
+                }
+                
+                lineCreation.LineSelectable -= 1;
+            }
+        });
     }
 }
 
 class GridNpc extends GridEntity{
     constructor(canvas){
         super(canvas);
+        
+        var self = this;
         
         super.setEntity(new fabric.Rect({
                         width: entitySettings.Width,
@@ -232,6 +271,22 @@ class GridNpc extends GridEntity{
                         top: entitySettings.PositionTop,
                         angle: 45,
                         }));
+        
+        this.entity.on('selected', function(e){  
+            if(lineCreation.LineSelectable != 0){
+                this.item(0).set({ strokeWidth: 5, stroke: 'rgba(255,0,0,0.3)' });
+                if(lineCreation.LineSelectable == 1){
+                    lineCreation.EntityTo = self;
+                    cfg.Containers.Connections.push(addConnection(this.canvas));
+                    lineCreation.EntityFrom.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                    lineCreation.EntityTo.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                }else if(lineCreation.LineSelectable == 2){
+                    lineCreation.EntityFrom = self;
+                }
+                
+                lineCreation.LineSelectable -= 1;
+            }
+        });
     }
 }
 
@@ -239,11 +294,29 @@ class GridPlace extends GridEntity{
     constructor(canvas){
         super(canvas);
         
+        var self = this;
+        
         super.setEntity(new fabric.Circle({
                         radius: entitySettings.Width / 2,
                         left: entitySettings.PositionLeft,
                         top: entitySettings.PositionTop,
                         }));
+        
+        this.entity.on('selected', function(e){  
+            if(lineCreation.LineSelectable != 0){
+                this.item(0).set({ strokeWidth: 5, stroke: 'rgba(255,0,0,0.3)' });
+                if(lineCreation.LineSelectable == 1){
+                    lineCreation.EntityTo = self;
+                    cfg.Containers.Connections.push(addConnection(this.canvas));
+                    lineCreation.EntityFrom.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                    lineCreation.EntityTo.entity.item(0).set({ strokeWidth: 0, stroke: 'rgba(255,0,0,0.3)' });
+                }else if(lineCreation.LineSelectable == 2){
+                    lineCreation.EntityFrom = self;
+                }
+                
+                lineCreation.LineSelectable -= 1;
+            }
+        });
     }
 }
 
@@ -252,7 +325,6 @@ class GridPlace extends GridEntity{
 class GridConnection{
     constructor(canvas, entityFrom, entityTo){
         var self = this;
-        
         this.canvas = canvas;
         this.from = entityFrom;
         this.to = entityTo;

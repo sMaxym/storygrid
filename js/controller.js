@@ -1,6 +1,7 @@
 var editor = new fabric.Canvas('editor');
 
 var gridEntities = [];
+var gridLines = [];
 
 var $addButtonChar = $('button[data-btn-add="char"]');
 var $addButtonNpc = $('button[data-btn-add="npc"]');
@@ -19,12 +20,14 @@ $addButtonPlace.on('click', function(){
     addEntity(gridEntities, newGridEntity('place', editor));
 });
 $addButtonConnection.on('click', function(){
-    createConnection(editor, gridEntities);
+    lineCreation.LineSelectable = 2;
 });
 
 
 $(document).ready(function(){
     setEditorFullscreen();
+    cfg.Containers.Entity = gridEntities;
+    cfg.Containers.Connections = gridLines;
 });
 
 

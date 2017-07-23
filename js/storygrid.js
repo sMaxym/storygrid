@@ -1,11 +1,4 @@
-var editOptions = {
-    Edit: false,
-    Color: false,
-    Image: false,
-    Remove: false,
-}
-
-var lineCreation = {    
+var lineCreation = {
     LineSelectable: 0,
     EntityFrom: null,
     EntityTo: null,

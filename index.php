@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/vex-theme-plain.css" />
     <link rel="stylesheet" href="css/vex.css" />
     
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css?version=2" />
     <link rel="stylesheet" href="css/response.css" />
    
     <!--[if lt IE 9]>
@@ -24,7 +24,6 @@
     <![endif]-->
   </head>
   <body>
-    
     <header id="top">
         <div class="container-fluid data">
             <div class="row">
@@ -36,7 +35,17 @@
                         <a href="#top" class="menu-item">home</a>
                         <a href="#about" class="menu-item">about grids</a>
                         <a href="#" class="menu-item">make grid</a>
-                        <a href="#" class="menu-item">sign up</a>
+                        <a href="#top" onclick="setLoginPos()" id="sign-item" class="menu-item">sign in/up</a>
+                        <div class="menu-form">
+                            <i class="fa fa-times-circle close" onclick="closeLogin()" aria-hidden="true"></i>
+                            <ul class="form-wrapper" id="sign-form">
+                                <li><input type="email" placeholder="Email..." id="email" name="txtEmail" /></li>
+                                <li><input type="password" placeholder="Password..." id="password" name="txtPassword" /></li>
+                                <li><input type="button" id="login-btn" name="btnLogin" value="submit" /></li>
+                                <br />
+                                <li><div class="open-modal" onclick="openRegistration()" href="#">Registration</div></li>
+                            </ul>
+                        </div>
                         <a href="#" class="menu-item"><i class="fa fa-flag" aria-hidden="true"></i> uk</a>
                     </nav>
                 </div>
@@ -118,7 +127,77 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/vex.combined.min.js"></script>
+    <script src="js/serversender.js"></script>
     <script src="js/page-design.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
+
+  <script>
+      var $signMenu = $('.menu-wrapper .menu-form');
+      var $signMenuElement = $('#sign-item');
+
+      function setLoginPos(){
+          $signMenu.css({
+              'left':$signMenuElement.position().left - 80,
+              'top':$signMenuElement.position().top + 45,
+          });
+      }
+
+      function closeLogin() {
+          $signMenu.css({
+              'left':$signMenuElement.position().left - 80,
+              'top':$signMenuElement.position().top - 9999999,
+          });
+      }
+
+      function openRegistration(){
+          vex.dialog.open({
+              message: 'Registration:',
+              input: [
+                  '<style>',
+                  '.creation-field-wrapper {',
+                  'margin: 1em 0;',
+                  '}',
+                  '.creation-field-wrapper > label {',
+                  'display: inline-block;',
+                  'margin-bottom: .2em;',
+                  '}',
+                  '.creation-field-wrapper > textarea {',
+                  'resize: none',
+                  '}',
+                  '.error{',
+                  'color: red',
+                  '}',
+                  '</style>',
+                  '<div class="creation-field-wrapper">',
+                  '<label for="email">Email :</label>',
+                  '<input name="email" type="email" placeholder="Email..." required />',
+                  '</div>',
+                  '<div class="creation-field-wrapper">',
+                  '<label for="passw">Password :</label>',
+                  '<input pattern=".{5,}"  name="passw" type="password" placeholder="12345678" required />',
+                  '</div>',
+                  '<div class="creation-field-wrapper">',
+                  '</div>',
+                  '</form>',
+              ].join(''),
+              buttons: [
+                  $.extend({}, vex.dialog.buttons.YES, { text: 'Register' }),
+                  $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' }),
+              ],
+              callback: function(data){
+                  if(data){
+                      $.ajax({
+                          
+                      });
+                  }
+              },
+          });
+      }
+
+      function vexAlert(message){
+          vex.dialog.alert(message);
+      }
+
+  </script>
   </body>
 </html>

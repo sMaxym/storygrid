@@ -14,6 +14,10 @@ body{
     box-sizing: border-box;
 }
 
+.close{
+    cursor:pointer;
+}
+
 a, a:hover, a:link,
 a:active, a:visited{
     text-decoration: none;
@@ -57,6 +61,35 @@ p{
     letter-spacing: 2px;
 }
 
+
+input[type="text"],
+input[type="email"],
+input[type="password"]{
+    padding: 7px 4px;
+    border: 2px solid #8bd0be;
+    color: #717171;
+    font-style: italic;
+}
+
+input[type="button"]{
+    padding: 6px 20px;
+    border: 0px;
+    background-color: #8bd0be;
+    color: #fff;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.open-modal{
+    font-size:15px;
+    text-transform: lowercase;
+    font-style: italic;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
 
 .underline {    
     border-radius: 50%;
@@ -149,6 +182,43 @@ p{
     padding: 3px;
 }
 
+.menu-wrapper .menu-form{
+    position: absolute;
+    top:-999999em;
+    z-index: 3;
+    background-color: #f7f7f7;
+    border: 5px solid #8bd0be;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+}
+
+.menu-wrapper .menu-form .close{
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.menu-wrapper .menu-form::before{
+    content:'';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #8bd0be;
+    top: -15px;
+    right: 20px;
+}
+
+
+.menu-wrapper .menu-form .form-wrapper{
+    list-style: none;
+    padding: 10px;
+}
+
+.menu-wrapper .menu-form .form-wrapper input{
+    margin: 5px 0;
+}
 
 
 #title{

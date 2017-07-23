@@ -133,7 +133,7 @@ class GridEntity{
         }
     }
     
-    getConnection(id){
+    function getConnection(id){
         return this.connections[id];
     }
     

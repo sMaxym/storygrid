@@ -41,7 +41,7 @@
                             <ul class="form-wrapper" id="sign-form">
                                 <li><input type="email" placeholder="Email..." id="email" name="txtEmail" /></li>
                                 <li><input type="password" placeholder="Password..." id="password" name="txtPassword" /></li>
-                                <li><input type="button" id="login-btn" name="btnLogin" value="submit" /></li>
+                                <li><input type="button" id="login-btn" name="btnLogin" value="log in" /></li>
                                 <br />
                                 <li><div class="open-modal" onclick="openRegistration()" href="#">Registration</div></li>
                             </ul>
@@ -186,9 +186,7 @@
               ],
               callback: function(data){
                   if(data){
-                      $.ajax({
-                          
-                      });
+                      register(data.email, data.passw);
                   }
               },
           });
@@ -197,6 +195,16 @@
       function vexAlert(message){
           vex.dialog.alert(message);
       }
+
+
+
+      $('#login-btn').on('click', function(){
+          var email    = $('#email').val(),
+              password = $('#password').val();
+
+          var a = logIn(email, password);
+
+      });
 
   </script>
   </body>

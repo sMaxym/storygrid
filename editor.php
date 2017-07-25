@@ -66,8 +66,7 @@
     <script src="js/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
 
-
-
+    <script src="js/serversender.js"></script>
     <script src="js/storygrid.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/design.js"></script>

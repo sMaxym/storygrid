@@ -51,3 +51,21 @@ function logOut(){
         },
     });
 }
+
+function sendGrid(name, canvas, entities, conns){
+    $.ajax({
+        url:          "server/dbgridsender.php?",
+        type:         'POST',
+        cache:        false,
+        data:         {
+            'name':          name,
+            'canvas':        canvas,
+            'entities':      entities,
+            'conns':         conns,
+        },
+        dataType:     'json',
+        success:      function(data){
+            
+        },
+    });
+}

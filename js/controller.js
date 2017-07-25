@@ -33,6 +33,39 @@ $addButtonSave.on('click', function () {
     var editorJson = JSON.stringify(editor);
     var entityJson = JSON.stringify(gridEntities);
     var linesJson = JSON.prune(gridLines);
+    var name = 'untitled';
+
+    vex.dialog.open({
+        message: 'Pick a color:',
+        input: [
+            '<style>',
+            '.creation-field-wrapper {',
+            'margin: 1em 0;',
+            '}',
+            '.creation-field-wrapper > label {',
+            'display: inline-block;',
+            'margin-bottom: .2em;',
+            '}',
+            '.creation-field-wrapper > textarea {',
+            'resize: none',
+            '}',
+            '</style>',
+
+            '<div class="creation-field-wrapper">',
+            '<label for="name">Grid name:</label>',
+            '<input name="name" type="text" placeholder="Family" />',
+            '</div>',
+        ].join(''),
+        buttons: [
+            $.extend({}, vex.dialog.buttons.YES, { text: 'Accept' }),
+        ],
+        callback: function(data){
+            if(data){
+                name = data.name;
+                sendGrid(name, editorJson, entityJson, linesJson);
+            }
+        },
+    });
 });
 
 $editButtonEdit.on('click', function(){

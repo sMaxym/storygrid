@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,7 +39,8 @@
                         <a href="#top" class="menu-item">home</a>
                         <a href="#about" class="menu-item">about grids</a>
                         <a href="#" class="menu-item">make grid</a>
-                        <a href="#top" onclick="setLoginPos()" id="sign-item" class="menu-item">sign in/up</a>
+                        <a href="#" onclick="setLoginPos()" id="sign-item" class="menu-item">sign in/up</a>
+                        <a href="#" onclick="" id="logout-item" class="menu-item hidden-lg hidden-md hidden-sm hidden-xs">log out</a>
                         <div class="menu-form">
                             <i class="fa fa-times-circle close" onclick="closeLogin()" aria-hidden="true"></i>
                             <ul class="form-wrapper" id="sign-form">
@@ -132,8 +137,18 @@
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
 
   <script>
+      var userId = null;
+
       var $signMenu = $('.menu-wrapper .menu-form');
       var $signMenuElement = $('#sign-item');
+      var $logoutMenuElement = $('#logout-item');
+
+      $(document).ready(function(){
+          userId = <?php echo json_encode($_SESSION['id']); ?>;
+          displayState(userId != null ? 1 : 0);
+
+      });
+
 
       function setLoginPos(){
           $signMenu.css({
@@ -149,7 +164,7 @@
           });
       }
 
-      function openRegistration(){
+      function openRegistration() {
           vex.dialog.open({
               message: 'Registration:',
               input: [
@@ -181,15 +196,26 @@
                   '</form>',
               ].join(''),
               buttons: [
-                  $.extend({}, vex.dialog.buttons.YES, { text: 'Register' }),
-                  $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' }),
+                  $.extend({}, vex.dialog.buttons.YES, {text: 'Register'}),
+                  $.extend({}, vex.dialog.buttons.NO, {text: 'Cancel'}),
               ],
-              callback: function(data){
-                  if(data){
+              callback: function (data) {
+                  if (data) {
                       register(data.email, data.passw);
                   }
               },
           });
+      }
+
+      function displayState(state){
+          if(state == 1){
+              closeLogin();
+              $signMenuElement.addClass('hidden-lg hidden-md hidden-sm hidden-xs');
+              $logoutMenuElement.removeClass('hidden-lg hidden-md hidden-sm hidden-xs');
+          }else{
+              $signMenuElement.removeClass('hidden-lg hidden-md hidden-sm hidden-xs');
+              $logoutMenuElement.addClass('hidden-lg hidden-md hidden-sm hidden-xs');
+          }
       }
 
       function vexAlert(message){
@@ -197,13 +223,24 @@
       }
 
 
-
       $('#login-btn').on('click', function(){
           var email    = $('#email').val(),
               password = $('#password').val();
 
-          var a = logIn(email, password);
+          var userEmail = logIn(email, password);
 
+          if(userEmail != ''){
+              displayState(1);
+              location.reload();
+          }else{
+              displayState(0);
+              vexAlert('Data is invalid.');
+          }
+      });
+
+      $logoutMenuElement.on('click', function(){
+          logOut();
+          location.reload();
       });
 
   </script>

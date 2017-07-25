@@ -1,4 +1,11 @@
-var lineCreation = {
+var editOptions = {
+    Edit: false,
+    Color: false,
+    Image: false,
+    Remove: false,
+}
+
+var lineCreation = {    
     LineSelectable: 0,
     EntityFrom: null,
     EntityTo: null,
@@ -133,7 +140,7 @@ class GridEntity{
         }
     }
     
-    function getConnection(id){
+    getConnection(id){
         return this.connections[id];
     }
     

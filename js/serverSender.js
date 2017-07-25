@@ -21,6 +21,7 @@ function logIn(email, password){
         url:          "server/registration.php?",
         type:         'POST',
         cache:        false,
+        async:        false,
         data:         {
             'email':         email,
             'password':      password,
@@ -28,10 +29,25 @@ function logIn(email, password){
         },
         dataType:     'html',
         success:      function(data){
-            alert(data);
+            id = data;
         },
     });
 
-    if(id == '-1') return false;
-    else return true;
+    return id;
+}
+
+function logOut(){
+    $.ajax({
+        url:          "server/registration.php?",
+        type:         'POST',
+        cache:        false,
+        async:        false,
+        data:         {
+            'action':        3,
+        },
+        dataType:     'html',
+        success:      function(data){
+
+        },
+    });
 }

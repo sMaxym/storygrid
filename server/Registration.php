@@ -4,7 +4,6 @@ require_once "dbcontroller.php";
 
 $userEmail = htmlspecialchars($_POST['email']);
 $userPassword = htmlspecialchars($_POST['password']);
-
 $action = htmlspecialchars($_POST['action']);
 
 switch ($action){
@@ -12,8 +11,23 @@ switch ($action){
         addUser($userEmail, $userPassword);
         break;
     case 2:
-        echo getUserByData($userEmail, $userPassword, 0);
+        $id = getUserByData($userEmail, $userPassword, 0);
+        if($id != "-1"){
+            echo $_SESSION['email'];
+        }
         break;
+    case 3:
+        logOut();
+        break;
+}
+
+
+
+// Functions
+
+function logOut(){
+    session_start();
+    session_destroy();
 }
 
 function getUserByData($email, $password, $limit){
@@ -21,6 +35,11 @@ function getUserByData($email, $password, $limit){
 
     for ($i = 0; $i < count($users); $i++){
         if($users[$i]["email"] == $email && $users[$i]["password"] == $password){
+            session_start();
+            $_SESSION['email'] = $email;
+            $_SESSION['id'] = $users[$i]["id"];
+            setcookie('email', $email, time()+60*60*3);
+            setcookie('pass', $password, time()+60*60*3);
             return $users[$i]["id"];
         }
     }

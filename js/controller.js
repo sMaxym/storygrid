@@ -7,6 +7,7 @@ var $addButtonChar = $('button[data-btn-add="char"]');
 var $addButtonNpc = $('button[data-btn-add="npc"]');
 var $addButtonPlace = $('button[data-btn-add="place"]');
 var $addButtonConnection = $('button[data-btn-add="connection"]');
+var $addButtonSave = $('button[data-btn-add="save"]');
 
 var $editingPanel = $('.editing-panel');
 var $editButtonEdit = $('[data-btn-edit="edit"]');
@@ -28,7 +29,11 @@ $addButtonPlace.on('click', function(){
 $addButtonConnection.on('click', function(){
     lineCreation.LineSelectable = 2;
 });
-
+$addButtonSave.on('click', function () {
+    var editorJson = JSON.stringify(editor);
+    var entityJson = JSON.stringify(gridEntities);
+    var linesJson = JSON.prune(gridLines);
+});
 
 $editButtonEdit.on('click', function(){
     

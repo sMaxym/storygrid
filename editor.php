@@ -33,6 +33,7 @@
         <li><button data-btn-add="npc" class="option upper" type="button">npc</button></li>
         <li><button data-btn-add="place" class="option" type="button">Place</button></li>
         <li><button data-btn-add="connection" class="option" type="button">Connection</button></li>
+        <li><button data-btn-add="save" class="option" type="button">Save</button></li>
     </ul>
     
     <div class="editing-panel">
@@ -61,9 +62,12 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/fabric.min.js"></script>
+    <script src="js/JSON.prune.js"></script>
     <script src="js/vex.combined.min.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
-    
+
+
+
     <script src="js/storygrid.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/design.js"></script>

@@ -69,3 +69,43 @@ function sendGrid(name, canvas, entities, conns){
         },
     });
 }
+
+function getGridNames(id){
+    var info;
+    $.ajax({
+        url:          "server/gridsgetter.php?",
+        type:         'GET',
+        cache:        false,
+        async:        false,
+        data:         {
+            'action':        1,
+            'id':            id,
+        },
+        dataType:     'html',
+        success:      function(data){
+            info = data;
+        },
+    });
+
+    return info;
+}
+
+function getGrids(id){
+    var info;
+    $.ajax({
+        url:          "server/gridsgetter.php?",
+        type:         'GET',
+        cache:        false,
+        async:        false,
+        data:         {
+            'action':        2,
+            'id':            id,
+        },
+        dataType:     'html',
+        success:      function(data){
+            info = data;
+        },
+    });
+
+    return info;
+}

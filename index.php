@@ -38,7 +38,12 @@ session_start();
                     <nav class="menu-wrapper">
                         <a href="#top" class="menu-item">home</a>
                         <a href="#about" class="menu-item">about grids</a>
-                        <a href="#" class="menu-item">make grid</a>
+                        <a href="#" id="grids" class="menu-item">make grid</a>
+                        <div id="gridListWrapper">
+                            <ul class="gridList">
+                                <li class="gridItem"><i class="fa fa-plus-circle" aria-hidden="true"></i></li>
+                            </ul>
+                        </div>
                         <a href="#" onclick="setLoginPos()" id="sign-item" class="menu-item">sign in/up</a>
                         <a href="#" onclick="" id="logout-item" class="menu-item hidden-lg hidden-md hidden-sm hidden-xs">log out</a>
                         <div class="menu-form">
@@ -132,21 +137,37 @@ session_start();
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/vex.combined.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
     <script src="js/serversender.js"></script>
     <script src="js/page-design.js"></script>
     <script>vex.defaultOptions.className = 'vex-theme-plain'</script>
 
   <script>
       var userId = null;
+      var gridNames = null;
 
       var $signMenu = $('.menu-wrapper .menu-form');
       var $signMenuElement = $('#sign-item');
       var $logoutMenuElement = $('#logout-item');
+      var $gridList = $('#grids');
+      var $gridSelection = $('#gridListWrapper');
+      var $gridElements = $('#gridListWrapper .gridList li');
 
       $(document).ready(function(){
           userId = <?php echo json_encode($_SESSION['id']); ?>;
           displayState(userId != null ? 1 : 0);
+          if(userId == null){
+              $gridList.bind('click', setLoginPos);
+          }else{
+              gridNames =  JSON.parse(getGridNames(userId));
+              for(var i = 0; i < gridNames.length; ++i){
+                  $gridSelection.children().append('<li class="gridItem">' + gridNames[i]['name'] + '</li>');
+              }
 
+              $gridList.add($gridSelection).bind('mouseover', setGridsPos);
+              $gridList.add($gridSelection).bind('mouseleave', closeGrids);
+
+          }
       });
 
 
@@ -161,6 +182,19 @@ session_start();
           $signMenu.css({
               'left':$signMenuElement.position().left - 80,
               'top':$signMenuElement.position().top - 9999999,
+          });
+      }
+
+      function setGridsPos(){
+          $gridSelection.css({
+              'left':$gridList.position().left + 15,
+              'top':$gridList.position().top + 30,
+          });
+      }
+
+      function closeGrids(){
+          $gridSelection.css({
+              'top':'-99999999em',
           });
       }
 
@@ -241,6 +275,17 @@ session_start();
       $logoutMenuElement.on('click', function(){
           logOut();
           location.reload();
+      });
+
+      $gridSelection.children().on('click', 'li', function(e){
+          var i = $(this).index();
+          if(i == 0){
+              $.removeCookie('gridId');
+          }else{
+              $.cookie('gridId', gridNames[i - 1]['id'], { expires: 7, path: '/' });
+          }
+
+          window.location.href = 'editor.php';
       });
 
   </script>

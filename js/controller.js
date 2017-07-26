@@ -36,7 +36,7 @@ $addButtonSave.on('click', function () {
     var name = 'untitled';
 
     vex.dialog.open({
-        message: 'Pick a color:',
+        message: 'Grid Name:',
         input: [
             '<style>',
             '.creation-field-wrapper {',
@@ -160,6 +160,24 @@ editor.on("selection:cleared", function(){
 
 $(document).ready(function(){
     setEditorFullscreen();
+
+    var gridId = $.cookie('gridId');
+    var editorData;
+    if(gridId){
+        editorData = JSON.parse(getGrids(gridId));
+
+        var objs = JSON.parse(editorData[0]['canvas']);
+        console.log(objs['objects']);
+        objs['objects'].forEach(function(item){
+            editor.add(item);
+        });
+
+        gridEntities = editorData[0]['entities'];
+        gridLines = editorData[0]['conns'];
+    }
+
+    editor.renderAll();
+
     cfg.Containers.Entity = gridEntities;
     cfg.Containers.Connections = gridLines;
 });

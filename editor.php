@@ -61,6 +61,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
     <script src="js/fabric.min.js"></script>
     <script src="js/JSON.prune.js"></script>
     <script src="js/vex.combined.min.js"></script>
